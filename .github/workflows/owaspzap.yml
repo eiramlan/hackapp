@@ -13,16 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Install Docker Compose
-      - name: Install Docker Compose
+      # Build and run the application using Dockerfile
+      - name: Build the Docker image
         run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
+          docker build -t my-app .
 
-      # Start the application using Docker Compose
-      - name: Start the application
+      - name: Run the application container
         run: |
-          docker-compose up -d
+          docker run -d -p 8080:8080 my-app
 
       # Wait for the application to be ready
       - name: Wait for the application to be ready
