@@ -1,14 +1,14 @@
 # Use an official OpenJDK runtime as a parent image
-FROM openjdk:17-jdk-alpine
+FROM openjdk:17-jdk-slim
 
-# Set the working directory in the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the built jar file from Maven target directory to the container
-COPY target/hackapp-0.0.1-SNAPSHOT.jar /app/hackapp.jar
+# Copy the project JAR file into the container
+COPY target/hackapp-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose port 8080 (Spring Boot default port)
+# Expose the port the app runs on
 EXPOSE 8080
 
-# Run the jar file
-ENTRYPOINT ["java", "-jar", "/app/hackapp.jar"]
+# Run the JAR file
+ENTRYPOINT ["java", "-jar", "app.jar"]
