@@ -18,14 +18,15 @@ public class UserController {
     // Insecure user registration
     @PostMapping("/register")  // Corrected path
     public User registerUser(@RequestBody User user) {
-        return userRepository.save(user);
+        //return userRepository.save(user);
+        return null;
     }
 
     // Vulnerable login (for demonstrating SQL injection)
     @PostMapping("/login")  // Corrected path
     public String loginUser(@RequestParam String username, @RequestParam String password) {
-        User user = userRepository.findByUsername(username);
-        if (user != null && user.getPassword().equals(password)) {
+        User user = userRepository.findByUsername(username, password);
+        if (user != null) {
             return "Welcome, " + user.getUsername();
         }
         return "Invalid username or password";
