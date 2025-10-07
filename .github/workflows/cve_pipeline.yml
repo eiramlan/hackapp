@@ -32,10 +32,10 @@ jobs:
       - name: Build container image
         run: docker build -t $IMAGE_TAG .
 
-      - name: Trivy image scan
+      - name: Trivy image scan (demo — do not fail run)
         uses: aquasecurity/trivy-action@0.33.1
         with:
-          version: '0.67.0'              # pin Trivy engine
+          version: 'v0.66.0'            # or 'latest'
           scan-type: image
           image-ref: ${{ env.IMAGE_TAG }}
           vuln-type: os,library
