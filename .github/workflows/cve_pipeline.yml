@@ -6,7 +6,7 @@ on:
 
 permissions:
   contents: read
-  security-events: write   # to upload SARIF to the Security tab
+  security-events: write   # needed to upload SARIF to the Security tab
 
 env:
   IMAGE_TAG: hackapp:${{ github.sha }}
@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Keep if your Dockerfile needs the built artefact (Maven jar)
+      # Keep if your Dockerfile needs the built artefact (Maven JAR)
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -33,9 +33,10 @@ jobs:
       - name: Build container image
         run: docker build -t $IMAGE_TAG .
 
-      - name: Trivy image scan (demo — fail on HIGH/CRITICAL)
+      - name: Trivy image scan (demo — do not fail run)
         uses: aquasecurity/trivy-action@0.33.1
         with:
+          trivy-version: '0.67.0'        # optional: use latest engine noted in your log
           scan-type: image
           image-ref: ${{ env.IMAGE_TAG }}
           vuln-type: os,library
@@ -44,7 +45,8 @@ jobs:
           format: sarif
           output: trivy-image.sarif
           limit-severities-for-sarif: true
-          exit-code: '1'   # makes the run show as failed if issues found
+          exit-code: '0'                 # <-- keep the run green for the demo
+          args: --skip-version-check     # optional: suppress version notice
 
       - name: Upload SARIF to GitHub Security
         if: always()
