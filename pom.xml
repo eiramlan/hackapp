@@ -41,6 +41,23 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!--
+			Intentional SCA teaching dependencies.
+			These versions are deliberately old so GitHub Dependabot can surface
+			known CVEs for classroom triage. Do not copy them into production code.
+		-->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>1.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.2.2</version>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
